@@ -1,0 +1,7 @@
+{
+    "region":"us-east-1",
+    "url": "example.com",
+    "provider": "example-provider.com",
+    "api":"example-api.com",
+    "identityPool":"us-east-1:identity-pool"
+}

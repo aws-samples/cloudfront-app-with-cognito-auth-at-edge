@@ -1,0 +1,29 @@
+{
+  "name": "cloudfront-app-with-cognito-auth-at-edge",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./bin/index.js test",
+    "build": "node ./bin/index.js rebuild"
+  },
+  "contributors": ["sguggenh@amazon.com", "whelerj@amazon.com"],
+  "license": "MIT",
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.0",
+    "aws-sdk": "^2.862.0",
+    "fs-extra": "^9.1.0"
+  },
+  "keywords": ["cloudfront", "auth", "lambda", "lambda@edge", "cognito", "identity pool", "nodejs", "javascript"],
+  "bin": {
+    "auth-lambda": "./bin/index.js"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "src",
+    "index.js",
+    "index.d.ts",
+    "lambda.auth.json"
+  ]
+}
