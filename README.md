@@ -1,27 +1,37 @@
 # Edge Lambda Cognito Auth Using NodeJS and Javascript
 
-A tool for easy authentication and authorization of users in `Cloudfront` Distributions by leveraging `Lambda@Edge` to request an ID token from any `OpenId Connect` Provider, then exchanging that token for temporary, rotatable credentials using `Cognito Identity Pools`.
+A tool for easy authentication and authorization of users in `Cloudfront` Distributions by leveraging `Lambda@Edge` 
+to request an ID token from any `OpenId Connect` Provider, 
+then exchanging that token for temporary, 
+rotatable credentials using `Cognito Identity Pools`.
 
 ## Auth Lambda Parameters
-To initialize the Lambda@Edge all you need to do is determine the values for the `AuthLambdaParams` object that will be passed to the initialization function:
+To initialize the Lambda@Edge all you need to do is determine the values for the `AuthLambdaParams` 
+object that will be passed to the initialization function:
 
 * ***url*** - The Url where your site can be accessed by authenticated users on the Internet.
-*NOTE: all url values can be passed in this object with or without the `https://` prefix. It will be added and removed as necessary internally*
+*NOTE: all url values can be passed in this object with or without the `https://` prefix. 
+It will be added and removed as necessary internally*
 
 * ***provider*** - The url of the provider that will be authenticating the user's identity.
 
-* ***identityPool*** - The Identity Pool Id of your Cognito Identity Pool. Identity Pool must be in same region as Cloudfront Distribution.
+* ***identityPool*** - The Identity Pool Id of your Cognito Identity Pool. 
+Identity Pool must be in same region as Cloudfront Distribution.
 
-* ***handler*** *optional (default 'handler')* - The name of the handler to use for the Lambda@Edge export. Your main lambda file 
-will be exported using this handler (`exports.handler = function`). For iac processes where a handler needs to be supplied, use `index.` plus this value.
+* ***handler*** *optional (default 'handler')* - The name of the handler to use for the `Lambda@Edge` export. 
+Your main lambda file will be exported using this handler (`exports.handler = function`). 
+For iac processes where a handler needs to be supplied, use `index.` plus this value.
 
-* ***targetPath*** *optional (default `path.join(process.cwd(), 'build', 'auth_lambda')`)* - The path to your built lambda directory. When using the CDK you can make an `AssetCode` Construct by calling `new AssetCode(targetPath)` with this value. Then you can pass that Construct to the Lambda Construct's `code` field as your function code.
+* ***targetPath*** *optional (default `path.join(process.cwd(), 'build', 'auth_lambda')`)* - The path to your built lambda directory. 
+When using the CDK you can make an `AssetCode` Construct by calling `new AssetCode(targetPath)` with this value. 
+Then you can pass that Construct to the Lambda Construct's `code` field as your function code.
 
 * ***redirectPath*** *optional (default `<AuthLambdaParams.url>`)* - When the request for an id token is being made to your OIDC provider, one of the query parameters necessary is a `redirect_uri`. 
 This value defaults to your url but if you want don't want the OIDC provider to redirect there you can provide a value here.
 If this value is a relative path, it will be added to your url, otherwise it will replace it.
 
-* ***env*** *optional (default undefined)* - Environment variables that can optionally be passed as a cookie object to your front end code. The values must be strings. To pass another `AuthLambdaParam` or Node env value through the env, add a `$` before the key:
+* ***env*** *optional (default undefined)* - Environment variables that can optionally be passed as a cookie object to your front end code. 
+The values must be strings. To pass another `AuthLambdaParam` or Node env value through the env, add a `$` before the key:
 ```javascript
     AuthLambdaParams.env = {
         api: 'api.example.com',
@@ -34,7 +44,8 @@ If this value is a relative path, it will be added to your url, otherwise it wil
     process.env.INVOKE_TIME = Date.now();
 ``` 
 
-* ***invoke*** *optional (default undefined)* - You can also include a function to perform other logic you need to accomplish inside the edge lambda or if you want to update the values passed to it at runtime.
+* ***invoke*** *optional (default undefined)* - You can also include a function to perform other logic you need to accomplish inside the edge lambda or 
+if you want to update the values passed to it at runtime.
 The `invoke` function is passed the initial `event`, `context`, and `callback` arguments provided to the lambda as well as: 
 * the `AuthLambdaParams` object supplied to the initialization function
 * the `AWS` sdk object available to all lambda functions
@@ -73,7 +84,8 @@ So if there are values that need to be accessed that aren't known yet, you could
         });
     }
 ```
-This looks for the output of a Cloud Formation stack with a specific name, then if found returns that output as the value for `AuthLambdaParams.identityPool`;
+This looks for the output of a Cloud Formation stack with a specific name, 
+then if found returns that output as the value for `AuthLambdaParams.identityPool`;
 
 ##### Example Auth Lambda Params Object
 ```json
@@ -108,7 +120,8 @@ The edge lambda  can be built programmatically with the static function `make`:
         }
     });
 ```
-You can also call `AuthLambda.promise` if you want to run custom logic after the built completes, say if you're using the CDK and want to add the code as a construct:
+You can also call `AuthLambda.promise` if you want to run custom logic after the built completes, 
+say if you're using the CDK and want to add the code as a construct:
 ```javascript
     const {Function, AssetCode} = require('@aws-cdk/aws-lambda');
      AuthLambda.promise({
