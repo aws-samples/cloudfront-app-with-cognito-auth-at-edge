@@ -43,10 +43,10 @@ function App() {
         <div className="code-block">
         <h2 className="Amazon-Orange">Cookie details</h2>
       
-        Web Identity Token:
+        X-Forwarded-User:
           <pre>
             <code>
-              {getCookie('WebIdentityToken') ? getCookie('WebIdentityToken') : 'Web Identity Token Not Found' }
+              {getCookie('x-forwarded-user') ? getCookie('x-forwarded-user') : 'X-Forwarded-User Not Found' }
             </code>
           </pre>
 
