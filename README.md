@@ -79,11 +79,17 @@ This looks for the output of a Cloud Formation stack with a specific name, then 
 ```json
 {
     "url": "https://my-app.com",
-    "provider": "https://open-id-provider.com",
+    "provider": "https://my-open-id-provider.com",
     "identityPool": "us-east-1:my-identity-pool-id",
     "handler": "main",
     "targetPath": "build/lambda",
-    "redirectPath": "/home"
+    "redirectPath": "/home",
+    "env": {
+        "api": "api.example.com",
+        "appName": "myApp",
+        "idPool": "$identityPool",
+        "ranAt": "$INVOKE_TIME"
+    }
 }
 ```
 
