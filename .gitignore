@@ -3,3 +3,4 @@ build
 .DS_Store
 .env
 test/
+README.ARTIFACT.md
