@@ -18,9 +18,11 @@ To get started all you need is:
 2. Then, [set up a Cognito Identity Pool](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-identity.html).
 
 3. Next, [add your chosen OIDC Provider](https://docs.aws.amazon.com/cognito/latest/developerguide/open-id.html) under `Identity Providers` in `Identity and Access Management` as well as to the Identity Pool. 
-*Note: Any time your app's domain or subdomain changes, you MUST add that Url as an Audience to the Identity Provider in IAM*
+*Note: Any time your app's domain or subdomain changes, you MUST add that Url as an Audience to the Identity Provider in IAM* 
 
-4. Finally, after your Lambda is created you'll need to [associate it with your Cloudfront Distribution](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works-tutorial.html#lambda-edge-how-it-works-tutorial-add-trigger).
+4. After your Lambda is created you'll need to [associate it with your Cloudfront Distribution](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/lambda-edge-how-it-works-tutorial.html#lambda-edge-how-it-works-tutorial-add-trigger).
+
+5. Finally, upload the [demo code](/example/) to S3 and associate it in the Clouldfront Distribution using [Origin Acccess Identity](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/private-content-restricting-access-to-s3.html).
 
 ## Lambda@Edge
 See [README](/README.md)
