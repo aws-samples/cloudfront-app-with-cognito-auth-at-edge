@@ -27,12 +27,13 @@ Identity Pool must be in same region as Cloudfront Distribution.
 Your main lambda file will be exported using this handler (`exports.handler = function`). 
 For iac processes where a handler needs to be supplied, use `index.` plus this value.
 
+* ***targetRoot*** *optional (default `process.cwd()`)* - The root of the path to your lambda build directory. Combines with `AuthLambda.targetPath` to get `authLambda.target`, which is the full path to the directory.
+
 * ***targetPath*** *optional (default `build/auth_lambda`)* - The path to your built lambda directory. 
 The value of `authLambda.target` will be the result of calling `path.join(AuthLambdaParams.targetRoot, AuthLambdaParams.targetPath)`.
+If both `AuthLambdaParams.targetRoot` and `AuthLambda.targetPath` are `undefined`, then `authLambda.target` will be the `auth_lambda` directory inside your app's build folder.
 When using the CDK you can make an `AssetCode` Construct by calling `new AssetCode(authLambda.target)`. 
 Then you can pass that Construct to the Lambda Construct's `code` field as your function code.
-
-* ***targetRoot*** *optional (default `process.cwd()`)* - The root of the path to your lambda build directory. Combines with `AuthLambda.targetPath` to get `authLambda.target`, which is the full path to the directory.
 
 * ***redirectPath*** *optional (default `<AuthLambdaParams.url>`)* - When the request for an id token is being made to your OIDC provider, one of the query parameters necessary is a `redirect_uri`. 
 This value defaults to your url but if you want don't want the OIDC provider to redirect there you can provide a value here.
