@@ -6,6 +6,7 @@ declare module "@amzn/edge-lambda-cognito-auth" {
         identityPool:string
         handler?:string
         targetPath?:string
+        targetRoot?:string
         redirectPath?:string
         env?:{[name:string]:string | number}
         invoke?:(...args:any[]) => AuthLambdaReturn

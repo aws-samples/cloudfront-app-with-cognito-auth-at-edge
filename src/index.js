@@ -6,7 +6,8 @@ const util = require('util');
 
 exports.AuthLambda = class AuthLambda {
     constructor(params = {}) {
-        this.dest = path.join(process.cwd(), params.targetPath || 'build/auth_lambda');
+        const root = params.targetRoot || process.cwd();
+        this.target = path.join(root, params.targetPath || 'build/auth_lambda');
         this.source = path.join(__dirname, '../lib');
         this.handler = params.handler || 'handler';
         const defaultParams = getFileParams();
@@ -37,12 +38,12 @@ exports.AuthLambda = class AuthLambda {
         }
         this.copy().then(() => {
             $this.handle().then(() => {
-                const msg = $this.dest.includes('test_lambda') ? 
+                const msg = $this.target.includes('test_lambda') ? 
                 'Test Successful' : 
-                `Edge Lambda Build Successful with Asset Path "${$this.dest}"`;
+                `Edge Lambda Build Successful with Asset Path "${$this.target}"`;
                 console.log(msg);
                 if (typeof callback === 'function') {
-                    callback.call($this, $this.dest, `index.${this.handler}`);
+                    callback.call($this, $this.target, `index.${this.handler}`);
                 }
             }).catch(onError)
         }).catch(onError);
@@ -59,7 +60,7 @@ exports.AuthLambda = class AuthLambda {
     dryRun() {
         const $this = this;
         this.promise().then(() => {
-            fs.remove($this.destPath, err => {
+            fs.remove($this.targetPath, err => {
                 if (err) throw new Error(err);
                 console.log('Edge Lambda Build Successful');
             });
@@ -68,7 +69,7 @@ exports.AuthLambda = class AuthLambda {
     }
 
     async copy() {
-        const dest = path.join(this.dest,'lib');
+        const dest = path.join(this.target,'lib');
         await fs.ensureDir(dest);
         return await fs.copy(this.source, dest, {
             overwrite: true,
@@ -77,7 +78,7 @@ exports.AuthLambda = class AuthLambda {
     }
 
     async handle() {
-        const dest = path.join(this.dest,'index.js');
+        const dest = path.join(this.target,'index.js');
         return await fs.outputFile(dest,this.function,'utf8');
     }
 
