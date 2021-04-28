@@ -6,7 +6,7 @@ const util = require('util');
 
 exports.AuthLambda = class AuthLambda {
     constructor(params = {}) {
-        this.dest = params.targetPath || path.join(process.cwd(), 'build/auth_lambda');
+        this.dest = path.join(process.cwd(), params.targetPath || 'build/auth_lambda');
         this.source = path.join(__dirname, '../lib');
         this.handler = params.handler || 'handler';
         const defaultParams = getFileParams();
