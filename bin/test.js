@@ -14,10 +14,11 @@ function handleError(err) {
 module.exports = function test(params = {}) {
     const base = path.join(__dirname,'..');
     const testPath = path.join(base,'test');
-    const targetPath = path.join(testPath, 'test_lambda');
+    const targetRoot = base;
+    const targetPath = 'test/test_lambda';
     fs.emptyDir(testPath, (err) => {
         if (err) handleError(err);
-        AuthLambda.promise({...params,targetPath}).then(() => {
+        AuthLambda.promise({...params,targetRoot,targetPath}).then(() => {
             assert(params && typeof params === 'object', 'Invalid params passed');
             assert(fs.existsSync(path.join(targetPath, 'lib'), 'Source directory does not exist'));
             assert(fs.existsSync(path.join(targetPath, 'index.js'), 'Handler does not exist'));
