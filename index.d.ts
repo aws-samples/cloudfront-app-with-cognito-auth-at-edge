@@ -1,4 +1,4 @@
-declare module "@amzn/edge-lambda-cognito-auth" {
+declare module "cloudfront-app-with-cognito-auth-at-edge" {
     import { CognitoIdentityCredentials } from "aws-sdk";
     export interface AuthLambdaParams {
         url: string
