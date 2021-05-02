@@ -160,22 +160,22 @@ auth-lambda --url my-app.com --provider my-provider.com --identityPool us-east-1
 The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = require('cloudfront-app-with-cognito-auth-at-edge')` contains several static helper functions that can be used to customize your setup:
 
 * ***AuthLambda.createKeyPair*** *(options:KeyPairOptions)* - Generates a public/private key pair and returns both. Params object is intended to make function flexible but in most cases generating a key pair by using `AuthLambda.createKeyPair()` and allowing for the defaults will suffice.
-***Key Pair Options***
-* ***handler*** *optional (default 'rsa')*: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
+    ***Key Pair Options***
+    * ***handler*** *optional (default 'rsa')*: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
 
-* ***format*** *optional (default 'pem')*: 'pem' | 'der'
+    * ***format*** *optional (default 'pem')*: 'pem' | 'der'
 
-* ***length*** *optional (default 2048)*: number
+    * ***length*** *optional (default 2048)*: number
 
-* ***publicKeyType*** *optional (default 'spki')*: 'spki' | 'pkcs1' - *pkcs1* can only be used when type is *rsa*
+    * ***publicKeyType*** *optional (default 'spki')*: 'spki' | 'pkcs1' - *pkcs1* can only be used when type is *rsa*
 
-* ***privateKeyType*** *optional (default 'pkcs8')*: 'pkcs8' | 'pkcs1' | 'sec1'  
-*pkcs1* can only be used when type is *rsa*  
-*sec1* can only be used when type is *ec
+    * ***privateKeyType*** *optional (default 'pkcs8')*: 'pkcs8' | 'pkcs1' | 'sec1'  
+    *pkcs1* can only be used when type is *rsa*  
+    *sec1* can only be used when type is *ec
 
-* ***cipher*** *optional (default undefined)*: string
+    * ***cipher*** *optional (default undefined)*: string
 
-* ***passphrase*** *optional (default undefined)*: string  
+    * ***passphrase*** *optional (default undefined)*: string  
 
 
 * ***AuthLambda.JwtDecode*** *(token:any)* - Parses a JWT token into an object. Returns null if token is invalid.
@@ -189,19 +189,19 @@ The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = req
 * ***AuthLambda.parseCookie*** *(cookieString:string)* - parses a cookie string into a cookie object. Calls `AuthLambda.getCookie` on each value.
 
 * ***AuthLambda.formatCookie*** *(key:string,value:any, options:CookieOptions)*
-***Cookie Options***
-* ***path*** *optional (default '/')*: string
+    ***Cookie Options***
+    * ***path*** *optional (default '/')*: string
 
-* ***domain*** *optional (default undefined)*: string
+    * ***domain*** *optional (default undefined)*: string
 
-* ***secure*** *optional (default true)*: boolean
+    * ***secure*** *optional (default true)*: boolean
 
-* ***httpOnly*** *optional (default false)*: boolean
+    * ***httpOnly*** *optional (default false)*: boolean
 
-* ***maxAge*** *optional (default undefined)*: Date | number | string
+    * ***maxAge*** *optional (default undefined)*: Date | number | string
 
-* ***expires*** *optional (default undefined)*: Date | number | string
+    * ***expires*** *optional (default undefined)*: Date | number | string
 
-* ***sameSite*** *optional (default undefined)* - 'strict' | 'lax' | 'none'
+    * ***sameSite*** *optional (default undefined)* - 'strict' | 'lax' | 'none'
 
 Encodes a value into a cookie string with selected options tacked on.
