@@ -56,9 +56,9 @@ The values must be strings. To pass another `AuthLambdaParam` or Node env value 
 * ***invoke*** *optional (default undefined)* - You can also include a function to perform other logic you need to accomplish inside the edge lambda or 
 if you want to update the values passed to it at runtime.
 The `invoke` function is passed the initial `event`, `context`, and `callback` arguments provided to the lambda as well as: 
-* the `AuthLambdaParams` object supplied to the initialization function
-* the `AWS` sdk object available to all lambda functions
-* the `AuthLambdaFunction` constructor that can initiate and handle the auth flow. 
+    * the `AuthLambdaParams` object supplied to the initialization function
+    * the `AWS` sdk object available to all lambda functions
+    * the `AuthLambdaFunction` constructor that can initiate and handle the auth flow. 
 
 So the default behavior of the lambda can be conditionally overridden by returning the `invoke` argument. For example:
 ```javascript
