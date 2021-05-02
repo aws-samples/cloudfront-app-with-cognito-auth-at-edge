@@ -116,8 +116,8 @@ exports.AuthLambda = class AuthLambda {
     static formatCookie(name,val,options = {}) {
         return formatCookie(name,val,options);
     }
-    async static createKeyPair() {
-        return await createKeyPair();
+    static createKeyPair() {
+        return createKeyPair();
     }
 
     static JwtDecode(token) {
