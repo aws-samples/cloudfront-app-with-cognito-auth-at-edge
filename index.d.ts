@@ -38,14 +38,20 @@ declare module "cloudfront-app-with-cognito-auth-at-edge" {
         headers?: AuthLambdaHeaders
     }
     export interface AuthLambdaCookieOptions {
-        expires?:Date | number
-        maxAge?:number
+        expires?:Date | number | string
+        maxAge?:Date | number | string
         secure?:boolean
         httpOnly?:boolean
         domain?:string
         path?:string
         encode?:string
         sameSite?: true | 'strict' | 'lax' | 'none'
+    }
+
+    export interface AuthLambdaToken {
+        header?:{[name:string]:any}
+        payload:{[name:string]:any}
+        signature:string
     }
     export interface AuthLambdaRedirectParams {
         redirect_uri: string,
@@ -64,6 +70,16 @@ declare module "cloudfront-app-with-cognito-auth-at-edge" {
     export interface CognitoCredentialsResponse {
         IdentityId:string
         Credentials: AuthLambdaCredentials
+    }
+
+    export interface AuthLambdaKeyPairOptions {
+        type?: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
+        format?: 'pem' | 'der'
+        length?:number
+        publicKeyType?: 'spki' | 'pkcs1'
+        privateKeyType?: 'pkcs8' | 'pkcs1' | 'sec1'  
+        cipher?:string
+        passphrase?:string
     }
     interface $AuthLambdaHeader {
         key:string
@@ -98,7 +114,7 @@ declare module "cloudfront-app-with-cognito-auth-at-edge" {
         onSuccess:(c:OnSuccess, e?:OnError) => any
         onError:(e:any, c?:OnError) => void
     }
-    export class EdgeLambdaCognitoAuth {
+    export class AuthLambdaEdge {
         constructor(event:AuthLambdaEvent,callback:AuthLambdaCallback,params:AuthLambdaParams)
         token:Token
         credentials:Credentials
@@ -138,5 +154,16 @@ declare module "cloudfront-app-with-cognito-auth-at-edge" {
         promise:() => Promise<any>
         copy:() => any
         handle:() => any
+
+        static encode(str:string,to?:string):any
+        static decode(str:string,from?:string):any
+        static getCookie(key:string,cookie:string):any
+        static parseCookie(str:string):any
+        static formatCookie(name:string,val:any,options?:AuthLambdaCookieOptions):string
+        static createKeyPair(options?:AuthLambdaKeyPairOptions): {
+            publicKey:string
+            privateKey:string
+        }
+        static JwtDecode(token:any):AuthLambdaToken | null
     }
 }

@@ -162,7 +162,7 @@ The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = req
 * ***AuthLambda.createKeyPair*** *(options:KeyPairOptions)* - Generates a public/private key pair and returns a `Promise` that resolves to an object with `publicKey` and `privateKey` fields. Parameter object is intended to make function flexible but in most cases generating a key pair by using `AuthLambda.createKeyPair()` and allowing for the defaults will suffice.  
 
     ***Key Pair Options***
-    * ***handler*** *optional (default 'rsa')*: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
+    * ***type*** *optional (default 'rsa')*: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
 
     * ***format*** *optional (default 'pem')*: 'pem' | 'der'
 
@@ -179,7 +179,7 @@ The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = req
     * ***passphrase*** *optional (default undefined)*: string  
 
 
-* ***AuthLambda.JwtDecode*** *(token:any)* - Parses a JWT token into an object. Returns null if token is invalid.
+* ***AuthLambda.JwtDecode*** *(token:any)* - Parses a JWT token into an `AuthLambdaToken` object. Returns null if token is invalid.
 
 * ***AuthLambda.encode*** *(utf8EncodedString:string, destinationEncoding?:any = 'base64')* - You can use the second parameter to convert to any encoding you want but the default behavior of this function is to convert a utf8 encoded string to a base64 encoding a string.
 

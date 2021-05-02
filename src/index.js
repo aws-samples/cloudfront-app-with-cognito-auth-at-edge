@@ -93,7 +93,7 @@ exports.AuthLambda = class AuthLambda {
     get function() {
         const params = {...this.params};
         if (params.invoke) params.invoke = params.invoke.toString();
-        return `const {AuthLambdaFunction} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = ${handler(this.params).toString()}     
+        return `const {AuthLambdaEdge} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = ${handler(this.params).toString()}     
         `
     }
 
