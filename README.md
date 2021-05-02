@@ -159,7 +159,8 @@ auth-lambda --url my-app.com --provider my-provider.com --identityPool us-east-1
 ## Utility Functions
 The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = require('cloudfront-app-with-cognito-auth-at-edge')` contains several static helper functions that can be used to customize your setup:
 
-* ***AuthLambda.createKeyPair*** *(options:KeyPairOptions)* - Generates a public/private key pair and returns both. Params object is intended to make function flexible but in most cases generating a key pair by using `AuthLambda.createKeyPair()` and allowing for the defaults will suffice.
+* ***AuthLambda.createKeyPair*** *(options:KeyPairOptions)* - Generates a public/private key pair and returns both. Params object is intended to make function flexible but in most cases generating a key pair by using `AuthLambda.createKeyPair()` and allowing for the defaults will suffice.  
+
     ***Key Pair Options***
     * ***handler*** *optional (default 'rsa')*: 'rsa' | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
 
@@ -188,7 +189,8 @@ The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = req
 
 * ***AuthLambda.parseCookie*** *(cookieString:string)* - parses a cookie string into a cookie object. Calls `AuthLambda.getCookie` on each value.
 
-* ***AuthLambda.formatCookie*** *(key:string,value:any, options:CookieOptions)*
+* ***AuthLambda.formatCookie*** *(key:string,value:any, options:CookieOptions)*  
+
     ***Cookie Options***
     * ***path*** *optional (default '/')*: string
 
