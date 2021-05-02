@@ -155,3 +155,42 @@ You can also pass arguments straight to the `auth-lambda` command using flags:
 ```
 auth-lambda --url my-app.com --provider my-provider.com --identityPool us-east-1:my-identity-pool-id
 ```
+
+## Utility Functions
+The `AuthLambda` class that can be accessed by calling `const {AuthLambda} = require('cloudfront-app-with-cognito-auth-at-edge')` contains several static helper functions that can be used to customize your setup:
+
+* ***AuthLambda.createKeyPair*** *(options?:{
+    type?: 'rsa'*(default)* | 'dsa' | 'ec' | 'ed25519' | 'ed448' | 'x25519' | 'x448' | 'dh'
+    format?: 'pem'*(default)* | 'der'
+    length?:number *(default 2048)*,
+    publicKeyType?: 'spki'*(default)* | 'pkcs1'*(RSA type only)*,
+    privateKeyType?: 'pkcs8'*(default)* | 'pkcs1'*(RSA type only)* | 'sec1'*(EC type only)*
+    cipher?:string
+    passphrase?:string
+}
+)* - Generates a public/private key pair and returns both. Params object is intended to make function flexible but in most cases generating a key pair by using `AuthLambda.createKeyPair()` and allowing for the defaults will suffice.
+
+* ***AuthLambda.JwtDecode*** *(token:any)* - Parses a JWT token into an object. Returns null if token is invalid.
+
+* ***AuthLambda.encode*** *(utf8EncodedString:string, destinationEncoding?:any = 'base64')* - You can use the second parameter to convert to any encoding you want but the default behavior of this function is to convert a utf8 encoded string to a base64 encoding a string.
+
+* ***AuthLambda.decode*** *(str:string, sourceEncoding?:any = 'base64')* - The inverse of `AuthLambda.encode`, convert a string to 'utf8' encoding.
+
+* ***AuthLambda.getCookie*** *(key:string,cookieString:string)* - Finds a particular cookie value within a cookie string and attempts to parse it if it's determined to be stringified JSON. If the key doesn't exist, returns `null`.
+
+* ***AuthLambda.parseCookie*** *(cookieString:string)* - parses a cookie string into a cookie object. Calls `AuthLambda.getCookie` on each value.
+
+* ***AuthLambda.formatCookie*** *(key:string,value:any,options?: {
+    path?:string
+    domain?:string
+    secure?:boolean
+    httpOnly?:boolean
+    maxAge?: Date | number | string
+    expires?: Date | number | string
+    sameSite: 'strict' | 'lax' | 'none'
+})* - Encodes a value into a cookie string with selected options tacked on. The default state of the options object is: 
+```json
+"path": "/",
+"secure": true,
+"httpOnly": false
+```

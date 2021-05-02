@@ -3,7 +3,15 @@ const fs = require('fs-extra');
 const {handler} = require('./handler');
 const {getFileParams} = require('./params');
 const util = require('util');
-
+const {
+    encode,
+    decode,
+    getCookie,
+    parseCookie,
+    createKeyPair,
+    decodeToken,
+    formatCookie
+} = require('./util')
 exports.AuthLambda = class AuthLambda {
     constructor(params = {}) {
         const root = params.targetRoot || process.cwd();
@@ -83,8 +91,37 @@ exports.AuthLambda = class AuthLambda {
     }
 
     get function() {
-        return `const {AuthLambdaFunction} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(this.params)}\n\nexports.${this.handler} = ${handler(this.params).toString()}     
+        const params = {...this.params};
+        if (params.invoke) params.invoke = params.invoke.toString();
+        return `const {AuthLambdaFunction} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = ${handler(this.params).toString()}     
         `
     }
 
+    static encode(str, to = 'base64') {
+        return encode(str,to);
+    }
+
+    static decode(str, from = 'base64') {
+        return decode(str, from);
+    }
+
+    static getCookie(key,cookie) {
+        return getCookie(key,cookie);
+    }
+
+    static parseCookie(str) {
+        return parseCookie(str);
+    }
+
+    static formatCookie(name,val,options = {}) {
+        return formatCookie(name,val,options);
+    }
+    async static createKeyPair() {
+        return await createKeyPair();
+    }
+
+    static JwtDecode(token) {
+        return decodeToken(token);
+    }
 }
+
