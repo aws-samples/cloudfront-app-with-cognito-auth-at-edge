@@ -11,7 +11,7 @@ const {
     createKeyPair,
     decodeToken,
     formatCookie
-} = require('./util')
+} = require('../lib/util')
 exports.AuthLambda = class AuthLambda {
     constructor(params = {}) {
         const root = params.targetRoot || process.cwd();
