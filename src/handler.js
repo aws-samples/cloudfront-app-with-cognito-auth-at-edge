@@ -3,6 +3,9 @@ const AWS = require('aws-sdk');
 
 exports.handler = function(params = {}) {
     return function(event,context,callback) {
+      if (params.invoke && typeof params.invoke === 'string') {
+        params.invoke = Function(params.invoke);
+      }
       if (typeof params.invoke === 'function') {
           const addlParams = params.invoke(event,context,callback,params, AWS, AuthLambdaEdge);
           if (addlParams) {
