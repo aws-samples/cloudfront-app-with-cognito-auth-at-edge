@@ -9,6 +9,7 @@ declare module "cloudfront-app-with-cognito-auth-at-edge" {
         targetRoot?:string
         redirectPath?:string
         env?:{[name:string]:string | number}
+        data?:{[name:string]:string | number}
         invoke?:(...args:any[]) => AuthLambdaReturn
     }
     export type AuthLambdaReturn =  ReturnType<AuthLambdaCallback>

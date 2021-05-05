@@ -39,7 +39,9 @@ Then you can pass that Construct to the Lambda Construct's `code` field as your 
 This value defaults to your url but if you want don't want the OIDC provider to redirect there you can provide a value here.
 If this value is a relative path, it will be added to your url, otherwise it will replace it.
 
-* ***env*** *optional (default undefined)* - Environment variables that can optionally be passed as a cookie object to your front end code. 
+* ***env*** *optional (default undefined)* - Environment variables that can be passed to your lambda and available for recall in your invoke function.
+
+* ***data*** *optional (default undefined)* - An object that can optionally be stringified and passed as a cookie to your front end code. 
 The values must be strings. To pass another `AuthLambdaParam` or Node env value through the env, add a `$` before the key:
 ```javascript
     AuthLambdaParams.env = {
@@ -106,7 +108,7 @@ then if found returns that output as the value for `AuthLambdaParams.identityPoo
     "handler": "main",
     "targetPath": "build/lambda",
     "redirectPath": "/home",
-    "env": {
+    "data": {
         "api": "api.example.com",
         "appName": "myApp",
         "idPool": "$identityPool",
