@@ -141,7 +141,7 @@ say if you're using the CDK and want to add the code as a construct:
         provider: "https://open-id-provider.com",
         identityPool: "us-east-1:my-identity-pool-id",
         invoke: (event, context, callback, params, aws, AuthLambdaEdge) => {
-            console.log('Hello from Edge Lambda');
+            console.log('Hello from Lambda@Edge');
         }
     }).then((pathToCode, handler) => {
     const code = new AssetCode(pathToCode);
