@@ -128,7 +128,7 @@ The edge lambda  can be built programmatically with the static function `make`:
         provider: "https://open-id-provider.com",
         identityPool: "us-east-1:my-identity-pool-id",
         invoke: (event, context, callback, params, aws, AuthLambdaEdge) => {
-            console.log('Hello from Edge Lambda');
+            console.log('Hello from Lambda@Edge');
         }
     });
 ```
