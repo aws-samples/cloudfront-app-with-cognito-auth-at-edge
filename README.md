@@ -96,6 +96,7 @@ So if there are values that need to be accessed that aren't known yet, you could
 This looks for the output of a Cloud Formation stack with a specific name, 
 then if found returns that output as the value for `AuthLambdaParams.identityPool`;
 
+**IMPORTANT** - *Don't forget that if you want to use the SDK in the invoke function that you'll have to allow the actions you're using in the lambda's role*
 ##### Example Auth Lambda Params Object
 ```json
 {
