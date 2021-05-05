@@ -58,11 +58,11 @@ if you want to update the values passed to it at runtime.
 The `invoke` function is passed the initial `event`, `context`, and `callback` arguments provided to the lambda as well as: 
     * the `AuthLambdaParams` object supplied to the initialization function
     * the `AWS` sdk object available to all lambda functions
-    * the `AuthLambdaFunction` constructor that can initiate and handle the auth flow. 
+    * the `AuthLambdaEdge` constructor that can initiate and handle the auth flow. 
 
 So the default behavior of the lambda can be conditionally overridden by returning the `invoke` argument. For example:
 ```javascript
-AuthLambdaParams.invoke = function(event,context,callback,params, AWS, AuthLambdaFunction) {
+AuthLambdaParams.invoke = function(event,context,callback,params, AWS, AuthLambdaEdge) {
     if (event.uri === '/redirect') {
         return callback(null, {
             status:200,
@@ -81,7 +81,7 @@ If you don't return the `callback` argument, the normal auth flow will occur aft
 If the `invoke` function returns an object or a Promise that returns an object, that object will be merged with the initial parameters before beginning the auth flow.
 So if there are values that need to be accessed that aren't known yet, you could access those values using the sdk and add them to the params:
 ```javascript
-    AuthLambdaParams.invoke = async function(event,context,callback,params, AWS, AuthLambdaFunction) {
+    AuthLambdaParams.invoke = async function(event,context,callback,params, AWS, AuthLambdaEdge) {
             const cf = new AWS.CloudFormation();
             const data = await cf.listExports({}).promise();
             const pool = data.Exports.find(output => output.Name === 'my-identity-pool-id');
@@ -124,7 +124,7 @@ The edge lambda  can be built programmatically with the static function `make`:
         url: "https://my-app.com",
         provider: "https://open-id-provider.com",
         identityPool: "us-east-1:my-identity-pool-id",
-        invoke: (event, context, callback, params, aws, AuthLambdaFunction) => {
+        invoke: (event, context, callback, params, aws, AuthLambdaEdge) => {
             console.log('Hello from Edge Lambda');
         }
     });
@@ -137,7 +137,7 @@ say if you're using the CDK and want to add the code as a construct:
         url: "https://my-app.com",
         provider: "https://open-id-provider.com",
         identityPool: "us-east-1:my-identity-pool-id",
-        invoke: (event, context, callback, params, aws, AuthLambdaFunction) => {
+        invoke: (event, context, callback, params, aws, AuthLambdaEdge) => {
             console.log('Hello from Edge Lambda');
         }
     }).then((pathToCode, handler) => {

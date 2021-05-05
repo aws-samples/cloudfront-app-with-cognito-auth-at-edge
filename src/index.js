@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs-extra');
-const {handler} = require('./handler');
 const {getFileParams} = require('./params');
 const util = require('util');
 const {
@@ -89,11 +88,12 @@ exports.AuthLambda = class AuthLambda {
         const dest = path.join(this.target,'index.js');
         return await fs.outputFile(dest,this.function,'utf8');
     }
-
     get function() {
-        const params = {...this.params};
-        if (params.invoke) params.invoke = params.invoke.toString();
-        return `const {AuthLambdaEdge} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = ${handler(this.params).toString()}     
+        const params = this.params;
+        const invoke = params.invoke ? params.invoke : (e,c,ca,p) => p;
+        delete params.invoke;
+        
+        return `const {AuthLambdaEdge} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = function(event, context, callback) {\n    const getParams = ${invoke.toString()}\n    params = getParams(event,context,callback,params,AWS,AuthLambdaEdge);\n    if (params && typeof params === 'object' && typeof params.then === 'function') {\n        params.then(a => {\n            return AuthLambdaEdge.init(event,context,callback,a);\n        });\n    } else {\n        return AuthLambdaEdge.init(event,context,callback,params);\n    }\n}
         `
     }
 
