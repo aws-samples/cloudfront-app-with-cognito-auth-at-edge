@@ -93,7 +93,7 @@ exports.AuthLambda = class AuthLambda {
         const invoke = params.invoke ? params.invoke : (e,c,ca,p) => p;
         delete params.invoke;
         
-        return `const {AuthLambdaEdge} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = function(event, context, callback) {\n    const getParams = ${invoke.toString()}\n    params = getParams(event,context,callback,params,AWS,AuthLambdaEdge);\n    if (params && typeof params === 'object' && typeof params.then === 'function') {\n        params.then(a => {\n            return AuthLambdaEdge.init(event,context,callback,a);\n        });\n    } else {\n        return AuthLambdaEdge.init(event,context,callback,params);\n    }\n}
+        return `const {AuthLambdaEdge} = require('./lib')\nconst AWS = require('aws-sdk');\nlet params = ${util.inspect(params)}\n\nexports.${this.handler} = function(event, context, callback) {\n    const getParams = ${invoke.toString()}\n    params = getParams(event,callback,params,AWS,AuthLambdaEdge);\n    if (params && typeof params === 'object' && typeof params.then === 'function') {\n        params.then(a => {\n            return AuthLambdaEdge.init(event,callback,a);\n        });\n    } else {\n        return AuthLambdaEdge.init(event,context,callback,params);\n    }\n}
         `
     }
 
